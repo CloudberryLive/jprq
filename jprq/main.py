@@ -9,17 +9,22 @@ from . import __version__
 def main():
     parser = argparse.ArgumentParser(description='Live And HTTPS Localhost')
     parser.add_argument('port', type=int, help='Port number of the local server')
-    parser.add_argument('--host', type=str, help='Host of the remote server', default='open.jprq.io')
+    parser.add_argument('--host', type=str, help='Host of the remote server', default='cloudberry.live')
     parser.add_argument('-s', '--subdomain', type=str, help='Sub-domain')
     parser.add_argument('-v', '--version', action="version",version=__version__, help='Version number of jprq')
 
     args = parser.parse_args()
 
+    
+    if not args.port:
+        print("Please specify -p/--port argument and port.")
+        return
+        
     username = args.subdomain or randomize(getuser())
 
     loop = asyncio.get_event_loop()
 
-    print(f"\n\033[1;35mjprq : {__version__}\033[00m \033[34m{'Press Ctrl+C to quit.':>60}\n")
+    print(f"\n {__version__}{'Press Ctrl+C to quit.':>60}\n")
 
     try:
         loop.run_until_complete(
@@ -29,4 +34,4 @@ def main():
             )
         )
     except KeyboardInterrupt:
-        print("\n\033[31mjprq tunnel closed\033[00m")
+        print("\njprq tunnel closed")

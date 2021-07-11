@@ -11,6 +11,8 @@ from .http import Client
 ssl_context = ssl.create_default_context()
 ssl_context.load_verify_locations(certifi.where())
 
+ssl_context = False
+
 
 async def open_tunnel(ws_uri: str, http_uri):
     async with websockets.connect(ws_uri, ssl=ssl_context) as websocket:
